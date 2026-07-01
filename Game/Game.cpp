@@ -34,6 +34,8 @@ int main()
             }
         }
 
+
+
         SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255); // Set render draw color to black
         SDL_RenderClear(renderer); // Clear the renderer
 
@@ -41,6 +43,7 @@ int main()
             SDL_RenderPoint(renderer, rand() % 1280, rand() % 1024);
             SDL_SetRenderDrawColor(renderer, rand() % 256, rand() % 256, rand() % 256, 255); // Set render draw color to green
         }
+
 
         SDL_SetRenderDrawColor(renderer, rand() % 256, rand() % 256, rand() % 256, 255); // Set render draw color to green
         SDL_RenderFillRect(renderer, &greenSquare); // Render the rectangle
