@@ -45,9 +45,9 @@ namespace nu {
     }
     void Renderer::DrawRect(float x, float y, float w, float h) {
         SDL_FRect rect = { x, y, w, h };
-        SDL_RenderFillRect(m_renderer, &rect);
+        SDL_RenderRect(m_renderer, &rect);
     }
     void Renderer::DrawLine(float x1, float y1, float x2, float y2) {
-
+		SDL_RenderLine(m_renderer, x1, y1, x2, y2);
     }
 }

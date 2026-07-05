@@ -26,14 +26,18 @@ int main()
 
         for (int i = 0; i < 1000; i++) {
             renderer.SetColor(rand() % 256, rand() % 256, rand() % 256);
-            renderer.DrawPoint(rand() % 1280, rand() % 1024);
+            renderer.DrawPoint(rand() % 1920, rand() % 1024);
         }
 
-		renderer.SetColor(rand() % 256, rand() % 256, rand() % 256);
-        renderer.DrawFillRect(40, 40, 50, 50);
+        for (int i = 0; i < 15; i++) {
+            renderer.SetColor(rand() % 256, rand() % 256, rand() % 256);
+            renderer.DrawLine(rand() % 1920, rand() % 1024, rand() % 1920, rand() % 1024);
+        }
 
-        //SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
-        //SDL_RenderDebugText(renderer, 10, 10, "Hello World!");
+        for (int i = 0; i < 10; i++) {
+            renderer.SetColor(rand() % 256, rand() % 256, rand() % 256);
+            renderer.DrawFillRect((i * rand() % 1880) + 40, (i * rand() % 984) + 40, (rand() % 90) + 10 , (rand() % 90) + 10);
+        }
 
         renderer.Present();
     }
