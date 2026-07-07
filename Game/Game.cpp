@@ -1,5 +1,3 @@
-#include <iostream>
-#include <vector>
 #include "Engine.h"
 
 int main()
@@ -7,6 +5,9 @@ int main()
     // INITIALIZATION
     nu::Renderer renderer;
     renderer.Initialize("Game Engine", 1920, 1024);
+
+    nu::Input input;
+    input.Initialize();
 
     //std::cout << sizeof(nu::Vector2) << std::endl;
     nu::Vector2 vel{ 0.5f, 0.0f };
@@ -31,7 +32,17 @@ int main()
             if (event.type == SDL_EVENT_QUIT) {
                 quit = true;
             }
+            if (event.type == SDL_EVENT_KEY_DOWN && event.key.scancode == SDL_SCANCODE_ESCAPE) {
+                quit = true;
+            }
         }
+
+        // UPDATE ENGINE
+        input.Update();
+
+        if (input.GetKeyPressed(SDL_SCANCODE_K)) std::cout << "Pressed" << std::endl;
+        if (input.GetKeyDown(SDL_SCANCODE_K)) std::cout << "Down" << std::endl;
+        if (input.GetKeyReleased(SDL_SCANCODE_K)) std::cout << "Released" << std::endl;
 
         // RENDER
         renderer.SetColor(0.0f, 0.0f, 0.0f);
@@ -42,6 +53,9 @@ int main()
             v[i] = v[i] + vel;
             renderer.DrawPoint(v[i].x, v[i].y);
         }
+
+        renderer.SetColor(1.0f, 1.0f, 1.0f);
+        renderer.DrawFillRect(input.GetMousePosition().x - 20, input.GetMousePosition().y - 20, 40, 40);
 /*
         for (int i = 0; i < 15; i++) {
             renderer.SetColor(nu::RandomFloat(), nu::RandomFloat(), nu::RandomFloat());
