@@ -7,10 +7,10 @@
 namespace nu {
 	class Input {
 	public:
-		enum MouseButton {
+		enum class MouseButton {
 			LEFT = 1,
 			MIDDLE,
-			RIGHT
+			RIGHT,
 		};
 	public:
 		bool Initialize();
@@ -24,7 +24,13 @@ namespace nu {
 		bool GetKeyReleased(int key) const { return m_prevKeyStates[key] && !m_keyStates[key]; }
 
 		Vector2 GetMousePosition() { return m_mousePosition; }
-		bool GetMouseDown(MouseButton button) const { return false; }
+		bool GetMouseDown(MouseButton button) const { return m_buttonStates & GetButtonBit(button); }
+		bool GetPrevMouseDown(MouseButton button) const { return m_prevButtonStates & GetButtonBit(button); }
+		bool GetButtonPressed(MouseButton button) const { return !GetPrevMouseDown(button) && GetMouseDown(button); }
+		bool GetButtonReleased(MouseButton button) const { return GetPrevMouseDown(button) && !GetMouseDown(button); }
+
+	private:
+		uint32_t GetButtonBit(MouseButton button) const;
 
 	private:
 		// Keyboard Stuff

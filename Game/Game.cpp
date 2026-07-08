@@ -44,6 +44,9 @@ int main()
         if (input.GetKeyDown(SDL_SCANCODE_K)) std::cout << "Down" << std::endl;
         if (input.GetKeyReleased(SDL_SCANCODE_K)) std::cout << "Released" << std::endl;
 
+		if (input.GetButtonPressed(nu::Input::MouseButton::LEFT)) std::cout << "Mouse Pressed" << std::endl;
+		if (input.GetMouseDown(nu::Input::MouseButton::LEFT)) std::cout << "Mouse Pressed" << std::endl;
+
         // RENDER
         renderer.SetColor(0.0f, 0.0f, 0.0f);
         renderer.Clear();
