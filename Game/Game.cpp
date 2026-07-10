@@ -94,7 +94,7 @@ int main()
             }
             else {
                 nu::Vector2 v = points.back() - input.GetMousePosition();
-                if (v.Length() > 30.0f) {
+                if (v.Length() > 10.0f) {
                     points.push_back(input.GetMousePosition());
                 }
             }
