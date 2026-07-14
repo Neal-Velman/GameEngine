@@ -2,6 +2,10 @@
 
 int main()
 {
+
+
+
+
     // INITIALIZATION
     nu::Renderer renderer;
     renderer.Initialize("Game Engine", 1920, 1024);
@@ -11,7 +15,10 @@ int main()
     input.Initialize();
 
     nu::Time time;
-    nu::Actor player{ nu::Transform{ nu::Vector2{ 860.0f, 512.0f }, 0.0f, 50.0f} };
+
+    nu::Mesh mesh{ { { -3, 3 }, { 3, 3 }, { 0, 0 } }, nu::Color{ 0.0f, 0.0f, 0.0f} };
+
+    nu::Actor player{ nu::Transform{ nu::Vector2{ 860.0f, 512.0f }, 0.0f, 50.0f}, std::vector<nu::Mesh>{ mesh } };
 
 
     nu::Vector2 position{ 860.0f, 512.0f };

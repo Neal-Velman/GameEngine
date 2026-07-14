@@ -53,7 +53,7 @@ namespace nu {
 			this->y = v.x * std::sin(radians) + v.y * std::cos(radians);
 
 
-			return v;
+			return *this;
 		}
 	};
 }

@@ -14,8 +14,10 @@ namespace nu {
     }
 
     void Actor::Draw(const nu::Renderer& renderer) const {
-        renderer.SetColor(1.0f, 1.0f, 1.0f);
-        renderer.DrawFillRect(m_transform.position.x - (m_transform.scale * 0.5f), m_transform.position.y - (m_transform.scale * 0.5f), m_transform.scale, m_transform.scale);
+        renderer.DrawModel(m_model, m_transform);
+        //renderer.SetColor(m_model.GetColor().r, m_model.GetColor().g, m_model.GetColor().b);
+        //renderer.SetColor(1.0f, 1.0f, 1.0f);
+        //renderer.DrawFillRect(m_transform.position.x - (m_transform.scale * 0.5f), m_transform.position.y - (m_transform.scale * 0.5f), m_transform.scale, m_transform.scale);
     }
 
 }
