@@ -10,8 +10,8 @@ namespace nu {
         Actor(const Transform& transform) : m_transform{ transform } {}
         Actor(const Transform& transform, const Model& model) : m_transform{ transform }, m_model{ model } {}
 
-        void Update(float dt);
-        void Draw(const class Renderer& renderer) const;
+        virtual void Update(float dt);
+        virtual void Draw(const class Renderer& renderer) const;
 
         const Transform& GetTransform() const { return m_transform; }
 
@@ -24,7 +24,7 @@ namespace nu {
 
     protected:
         Transform m_transform;
-        Vector2 m_velocity{ 0,0 };
+        Vector2 m_velocity{ 0, 0 };
         Model m_model;
     };
 

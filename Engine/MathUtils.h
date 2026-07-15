@@ -5,6 +5,9 @@ namespace nu::math {
 
 	constexpr float Pi = 3.1415926535897932384626433832795f;
 	constexpr float Pi2 = 3.1415926535897932384626433832795f;
+
+	constexpr float RadToDeg = 180.0f / Pi;
+	constexpr float DegToRad = Pi / 180.0f;
 	template<typename T>
 	T Wrap(T min, T max, T value) {
 		if (value > max) value = min;

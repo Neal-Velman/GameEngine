@@ -3,6 +3,7 @@
 #include "Transform.h"
 #include "Model.h"
 #include "Input.h"
+#include "MathUtils.h"
 #include <iostream>
 
 namespace nu {
@@ -76,6 +77,9 @@ namespace nu {
 
                 v1 *= transform.scale;
                 v2 *= transform.scale;
+
+                v1 = v1.Rotate(transform.rotation * 3.1415926535897932384626433832795f / 180.0f);
+                v2 = v2.Rotate(transform.rotation * 3.1415926535897932384626433832795f / 180.0f);
 
                 v1 += transform.position;
                 v2 += transform.position;
