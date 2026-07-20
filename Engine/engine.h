@@ -9,6 +9,7 @@
 #include "Input.h"
 #include "GameTime.h"
 #include "Actor.h"
+#include "Scene.h"
 
 #include <iostream>
 #include <vector>

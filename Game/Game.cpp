@@ -1,5 +1,6 @@
 #include "Engine.h"
 #include "Player.h"
+#include "Enemy.h"
 
 #include <iostream>
 #include <vector>
@@ -10,7 +11,29 @@ int main()
     nu::engine.Initialize();
 
     nu::Mesh mesh{ { { 2, 0 }, { -1, 2 }, { 0, 0 }, { -1, -2 }, { 2, 0 } }, nu::Color{ 0.0f, 0.0f, 0.0f } };
-    Player player{ 400.0f, nu::Transform { nu::Vector2 { 860.0f, 512.0f }, 0.0f, 50.0f }, std::vector<nu::Mesh> { mesh } };
+    nu::Model model { std::vector<nu::Mesh> { mesh } };
+
+    nu::Scene scene;
+
+    PlayerDesc playerDesc;
+    playerDesc.name = "Player";
+    playerDesc.model = model;
+    playerDesc.transform = nu::Transform{ nu::Vector2 { 860.0f, 512.0f }, 0.0f, 50.0f };
+    playerDesc.speed = 400.0f;
+
+    Player* player = new Player { playerDesc };
+    scene.AddActor(player);
+
+    for (int i = 0; i < 20; i++) {
+        EnemyDesc enemyDesc;
+        enemyDesc.name = "Enemy";
+        enemyDesc.model = model;
+        enemyDesc.transform = nu::Transform{ nu::Vector2 { nu::RandomFloat((float)nu::engine.GetRenderer().GetWidth()), nu::RandomFloat((float)nu::engine.GetRenderer().GetHeigt())}, 180.0f, 25.0f };
+        enemyDesc.speed = 400.0f;
+
+        Enemy* enemy = new Enemy { enemyDesc };
+        scene.AddActor(enemy);
+    }
 
     std::vector<nu::Vector2> points;
 
@@ -32,8 +55,11 @@ int main()
         // UPDATE ENGINE
         nu::engine.Update();
 
-        player.SetRotation(player.GetTransform().rotation + (90.0f * nu::engine.GetTime().GetDeltaTime()));
-        player.Update(nu::engine.GetTime().GetDeltaTime());
+        float dt = nu::engine.GetTime().GetDeltaTime();
+        scene.Update(dt);
+        /*player.Update(nu::engine.GetTime().GetDeltaTime());
+        player.SetRotation(player.GetTransform().rotation);
+        enemy.Update(dt);*/
 
 
         if (nu::engine.GetInput().GetMouseDown(nu::Input::MouseButton::LEFT)) {
@@ -67,7 +93,9 @@ int main()
         }
 
         // Character
-        player.Draw(nu::engine.GetRenderer());
+        /*player.Draw(nu::engine.GetRenderer());
+        enemy.Draw(nu::engine.GetRenderer());*/
+        scene.Draw(nu::engine.GetRenderer());
 
         nu::engine.GetRenderer().Present();
     }
