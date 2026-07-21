@@ -10,8 +10,10 @@ int main()
     // INITIALIZATION
     nu::engine.Initialize();
 
-    nu::Mesh mesh{ { { 2, 0 }, { -1, 2 }, { 0, 0 }, { -1, -2 }, { 2, 0 } }, nu::Color{ 0.0f, 0.0f, 0.0f } };
-    nu::Model model { std::vector<nu::Mesh> { mesh } };
+    nu::Mesh mesh{ { { 2, 0 }, { -1, 2 }, { -0.5, 1.5 }, { 0, 0 }, {-0.5, -1.5 }, { -1, -2 }, { 2, 0 } }, nu::Color{ 0.75f, 0.25f, 0.25f } };
+    nu::Mesh mesh2{ { { 2, 0 }, { -1, 3 }, { -1, 2 }, { 0, 0 }, { -1, -2 }, { -1, -3 }, { 2, 0 } }, nu::Color{ 0.25f, 0.5f, 0.25f } };
+    nu::Mesh mesh3{ { { 2, 0 }, { -1, 2 }, { 0, 0 }, { -1, -2 }, { 2, 0 } }, nu::Color{ 0.1f, 0.2f, 0.75f } };
+    nu::Model model{ std::vector<nu::Mesh> { mesh, mesh2, mesh3 } };
 
     nu::Scene scene;
 

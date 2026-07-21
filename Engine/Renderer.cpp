@@ -70,7 +70,6 @@ namespace nu {
         for (auto mesh : model.GetMeshes()) {
             auto& points = mesh.GetPoints();
             SetColor(mesh.GetColor().r, mesh.GetColor().g, mesh.GetColor().b, 1.0f);
-            SetColor(1.0f, 1.0f, 1.0f, 1.0f);
             for (int i = 0; i + 1 < points.size(); i++) {
                 Vector2 v1 = points[i];
                 Vector2 v2 = points[i + 1];
