@@ -1,12 +1,24 @@
 #include "Engine.h"
 #include "Player.h"
 #include "Enemy.h"
+#include <fmod.hpp>
 
 #include <iostream>
 #include <vector>
 
 int main()
 {
+
+    // create audio system
+    FMOD::System* audio;
+    FMOD::System_Create(&audio);
+
+    void* extradriverdata = nullptr;
+    audio->init(32, FMOD_INIT_NORMAL, extradriverdata);
+
+
+
+
     // INITIALIZATION
     nu::engine.Initialize();
 
@@ -40,6 +52,22 @@ int main()
     std::vector<nu::Vector2> points;
 
     // MAIN LOOP
+
+    std::vector<FMOD::Sound*> sounds;
+
+    FMOD::Sound* sound = nullptr;
+    audio->createSound("test.wav", FMOD_DEFAULT, 0, &sound);
+
+    FMOD::Sound* sound2 = nullptr;
+    audio->createSound("bass.wav", FMOD_DEFAULT, 0, &sound2);
+    sounds.push_back(sound2);
+
+    FMOD::Sound* sound3 = nullptr;
+    audio->createSound("cowbell.wav", FMOD_DEFAULT, 0, &sound3);
+    sounds.push_back(sound3);
+
+    audio->playSound(sound, 0, false, nullptr);
+
     bool quit = false;
 
     // UPDATE
@@ -56,12 +84,23 @@ int main()
 
         // UPDATE ENGINE
         nu::engine.Update();
+        audio->update();
 
         float dt = nu::engine.GetTime().GetDeltaTime();
         scene.Update(dt);
         /*player.Update(nu::engine.GetTime().GetDeltaTime());
         player.SetRotation(player.GetTransform().rotation);
         enemy.Update(dt);*/
+
+        if (nu::engine.GetInput().GetKeyPressed(SDL_SCANCODE_1))
+        {
+            audio->playSound(sounds[0], nullptr, false, nullptr);
+        }
+
+        if (nu::engine.GetInput().GetKeyPressed(SDL_SCANCODE_2))
+        {
+            audio->playSound(sounds[1], nullptr, false, nullptr);
+        }
 
 
         if (nu::engine.GetInput().GetMouseDown(nu::Input::MouseButton::LEFT)) {
