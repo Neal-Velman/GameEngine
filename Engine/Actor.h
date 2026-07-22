@@ -5,6 +5,8 @@
 
 namespace nu {
 
+    class Scene;
+
     struct ActorDesc {
         std::string name;
         std::string tag;
@@ -16,7 +18,7 @@ namespace nu {
     class Actor {
     public:
         Actor() = default;
-        Actor(const ActorDesc& ActorDesc) : m_transform{ ActorDesc.transform }, m_velocity{ ActorDesc.velocity }, m_model{ ActorDesc.model } {}
+        Actor(const ActorDesc& ActorDesc) : m_name{ ActorDesc.name }, m_tag{ ActorDesc.tag },  m_transform { ActorDesc.transform }, m_velocity{ ActorDesc.velocity }, m_model{ ActorDesc.model } {}
         Actor(const Transform& transform) : m_transform{ transform } {}
         Actor(const Transform& transform, const Model& model) : m_transform{ transform }, m_model{ model } {}
 
@@ -36,12 +38,19 @@ namespace nu {
         const std::string& GetName() const { return m_name; }
         const std::string& GetTag() const { return m_tag; }
 
+        Scene* GetScene() { return m_scene; }
+
+        friend Scene;
+
     protected:
         std::string m_name;
         std::string m_tag;
+
         Transform m_transform;
         Vector2 m_velocity{ 0, 0 };
+
         Model m_model;
+        Scene* m_scene{ nullptr };
     };
 
 }

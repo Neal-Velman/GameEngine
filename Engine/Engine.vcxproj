@@ -142,6 +142,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Actor.h" />
+    <ClInclude Include="File.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="Engine.h" />
     <ClInclude Include="GameTime.h" />
@@ -160,6 +161,7 @@
   <ItemGroup>
     <ClCompile Include="Actor.cpp" />
     <ClCompile Include="Engine.cpp" />
+    <ClCompile Include="File.cpp" />
     <ClCompile Include="GameTime.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="pch.cpp">

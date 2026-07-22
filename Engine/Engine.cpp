@@ -8,7 +8,6 @@
 // TODO: This is an example of a library function
 
 namespace nu {
-	Engine engine;
 	bool Engine::Initialize() {
 		m_renderer.Initialize("Game Engine", 1920, 1024);
 		m_input.Initialize();
