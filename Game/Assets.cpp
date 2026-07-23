@@ -14,4 +14,8 @@ namespace Assets {
 
     nu::Model enemyModel{ std::vector<nu::Mesh> { enemyMesh, enemyMesh2, enemyMesh3 } };
 
+    nu::Mesh bulletMesh{ { nu::Vector2{ -1, -1 }, nu::Vector2{ 1, 0 }, nu::Vector2{ -1, 1 }, nu::Vector2{ -1, -1 } }, nu::Color{ 1.0f, 0.0f, 0.0f } };
+
+    nu::Model bulletModel{ std::vector<nu::Mesh> { bulletMesh } };
+
 }

@@ -10,7 +10,7 @@
 int main()
 {
     
-    // get current working directory
+    /*// get current working directory
     std::cout << "Directory Operations:\n";
     std::cout << "Working directory: " << nu::GetWorkingDirectory() << "\n";
 
@@ -59,6 +59,7 @@ int main()
     {
         std::cout << str << "\n";
     }
+    */
 
     // create audio system
     FMOD::System* audio;
@@ -80,6 +81,7 @@ int main()
     playerDesc.model = Assets::playerModel;
     playerDesc.transform = nu::Transform{ nu::Vector2 { 860.0f, 512.0f }, 0.0f, 50.0f };
     playerDesc.speed = 400.0f;
+    playerDesc.damping = 1.5f;
 
     Player* player = new Player { playerDesc };
     scene.AddActor(player);
@@ -89,7 +91,8 @@ int main()
         enemyDesc.name = "Enemy";
         enemyDesc.model = Assets::playerModel;
         enemyDesc.transform = nu::Transform{ nu::Vector2 { nu::RandomFloat((float)nu::Engine::Get().GetRenderer().GetWidth()), nu::RandomFloat((float)nu::Engine::Get().GetRenderer().GetHeigt())}, 180.0f, 25.0f };
-        enemyDesc.speed = 400.0f;
+        enemyDesc.speed = nu::RandomFloat(200.0f, 400.0f);
+        enemyDesc.damping = 1.5f;
 
         Enemy* enemy = new Enemy { enemyDesc };
         scene.AddActor(enemy);

@@ -11,14 +11,16 @@ namespace nu {
         std::string name;
         std::string tag;
         Transform transform;
-        Vector2 velocity{ 0.0f, 0.0f };
+        Vector2 velocity { 0.0f, 0.0f };
+        float damping { 0.0f };
+        float lifespan { 0.0f };
         Model model;
     };
 
     class Actor {
     public:
         Actor() = default;
-        Actor(const ActorDesc& ActorDesc) : m_name{ ActorDesc.name }, m_tag{ ActorDesc.tag },  m_transform { ActorDesc.transform }, m_velocity{ ActorDesc.velocity }, m_model{ ActorDesc.model } {}
+        Actor(const ActorDesc& ActorDesc) : m_name{ ActorDesc.name }, m_tag{ ActorDesc.tag }, m_transform{ ActorDesc.transform }, m_velocity{ ActorDesc.velocity }, m_damping{ ActorDesc.damping }, m_lifespan{ ActorDesc.lifespan}, m_model{ ActorDesc.model } {}
         Actor(const Transform& transform) : m_transform{ transform } {}
         Actor(const Transform& transform, const Model& model) : m_transform{ transform }, m_model{ model } {}
 
@@ -48,7 +50,9 @@ namespace nu {
 
         Transform m_transform;
         Vector2 m_velocity{ 0, 0 };
-
+        float m_damping{ 0.0f };
+        float m_lifespan { 0.0f };
+        bool m_destroyed { false };
         Model m_model;
         Scene* m_scene{ nullptr };
     };
