@@ -20,7 +20,7 @@ namespace nu {
 		const std::vector<Vector2>& GetPoints() const { return m_points; }
 		const Color& GetColor() const { return m_color; }
 
-
+		float GetRadius() const;
 	private:
 		std::vector<Vector2> m_points;
 		Color m_color{ 1.0f, 1.0f, 1.0f };

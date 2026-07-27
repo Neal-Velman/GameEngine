@@ -6,18 +6,32 @@
 
 #include <iostream>
 #include <vector>
+#include <map>
+
 
 int main()
 {
-    
+    /*
+    std::map<std::string, int> students;
+    students["Neal"] = 19;
+    students["Eros"] = 21;
+    students["Frankie"] = 34;
+
+    if (students.contains("Eros")) {
+        std::cout << "Found.\n";
+    }
+
+
+    std::cout << students["Neal"] << std::endl;
+    */
     /*// get current working directory
     std::cout << "Directory Operations:\n";
     std::cout << "Working directory: " << nu::GetWorkingDirectory() << "\n";
 
     // set working directory (current working directory + "Assets")
     std::cout << "Setting directory to 'Assets'...\n";
-    nu::SetWorkingDirectory("Assets");
     std::cout << "New directory: " << nu::GetWorkingDirectory() << "\n\n";
+
 
     // get filenames in the working directory
     std::cout << "Files in Directory:\n";
@@ -61,18 +75,17 @@ int main()
     }
     */
 
+    // INITIALIZATION
+    nu::SetWorkingDirectory("Assets");
+
+    nu::Engine::Get().Initialize();
+
     // create audio system
     FMOD::System* audio;
     FMOD::System_Create(&audio);
 
     void* extradriverdata = nullptr;
     audio->init(32, FMOD_INIT_NORMAL, extradriverdata);
-
-
-
-
-    // INITIALIZATION
-    nu::Engine::Get().Initialize();
 
     nu::Scene scene;
 
@@ -99,10 +112,10 @@ int main()
     }
 
     std::vector<nu::Vector2> points;
+    std::vector<FMOD::Sound*> sounds;
 
     // MAIN LOOP
 
-    std::vector<FMOD::Sound*> sounds;
 
     FMOD::Sound* sound = nullptr;
     audio->createSound("test.wav", FMOD_DEFAULT, 0, &sound);

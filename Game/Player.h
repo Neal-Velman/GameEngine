@@ -14,6 +14,8 @@ public:
 
 	void Update	(float dt) override;
 
+	void OnCollision(Actor* other);
+
 private:
 	int m_ammo = 0;
 	float m_speed = 400.0f;

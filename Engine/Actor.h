@@ -27,6 +27,8 @@ namespace nu {
         virtual void Update(float dt);
         virtual void Draw(const class Renderer& renderer) const;
 
+        virtual void OnCollision(Actor* other) {}
+
         const Transform& GetTransform() const { return m_transform; }
 
         void SetPosition(const Vector2& position) { m_transform.position = position; }
@@ -41,6 +43,12 @@ namespace nu {
         const std::string& GetTag() const { return m_tag; }
 
         Scene* GetScene() { return m_scene; }
+
+        float GetRadius() const;
+
+        void SetDestroyed(bool destroy = true) { m_destroyed = destroy; }
+
+        bool GetDestroyed() const { return m_destroyed; }
 
         friend Scene;
 
