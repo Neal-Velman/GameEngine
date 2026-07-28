@@ -1,5 +1,6 @@
 #pragma once
 #include <SDL3/SDL.h>
+#include <SDL3_ttf/SDL_ttf.h>
 
 namespace nu {
 	class Renderer {
@@ -22,6 +23,8 @@ namespace nu {
 
 		int GetWidth() const { return m_width; }
 		int GetHeigt() const { return m_height; }
+
+		friend class Text;
 
 		SDL_Renderer* GetRenderer() { return m_renderer; }
 

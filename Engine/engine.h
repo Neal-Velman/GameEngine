@@ -3,6 +3,7 @@
 #include "Vector2.h"
 #include "MathUtils.h"
 #include "Transform.h"
+#include "Text.h"
 
 // Systems
 #include "Renderer.h"
@@ -11,6 +12,7 @@
 #include "Actor.h"
 #include "Scene.h"
 #include "File.h"
+#include "Game.h"
 
 #include <iostream>
 #include <vector>
@@ -41,5 +43,4 @@ namespace nu {
 		Time m_time;
 
 	};
-
 }

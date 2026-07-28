@@ -3,6 +3,7 @@
 #include "Enemy.h"
 #include <fmod.hpp>
 #include "Assets.h"
+#include "SpaceGame.h"
 
 #include <iostream>
 #include <vector>
@@ -11,74 +12,22 @@
 
 int main()
 {
-    /*
-    std::map<std::string, int> students;
-    students["Neal"] = 19;
-    students["Eros"] = 21;
-    students["Frankie"] = 34;
-
-    if (students.contains("Eros")) {
-        std::cout << "Found.\n";
-    }
-
-
-    std::cout << students["Neal"] << std::endl;
-    */
-    /*// get current working directory
-    std::cout << "Directory Operations:\n";
-    std::cout << "Working directory: " << nu::GetWorkingDirectory() << "\n";
-
-    // set working directory (current working directory + "Assets")
-    std::cout << "Setting directory to 'Assets'...\n";
-    std::cout << "New directory: " << nu::GetWorkingDirectory() << "\n\n";
-
-
-    // get filenames in the working directory
-    std::cout << "Files in Directory:\n";
-    auto filenames = nu::GetFilesInDirectory(nu::GetWorkingDirectory());
-    for (const auto& filename : filenames)
-    {
-        std::cout << filename << "\n";
-    }
-    std::cout << "\n";
-
-    // get filename info
-    if (!filenames.empty())
-    {
-        // get filename
-        std::string str = nu::GetFilename(filenames[0]);
-        std::cout << "Filename: " << str << "\n";
-
-        // get extension
-        str = nu::GetFileExtension(filenames[0]);
-        std::cout << "Extension: " << str << "\n";
-
-        // get filename no extension
-        str = nu::GetFilenameNoExtension(filenames[0]);
-        std::cout << "Filename No Extension: " << str << "\n\n";
-    }
-
-    // read and display text file
-    std::cout << "Text File Reading:\n";
-    std::string str;
-    if (nu::ReadTextFile("test.txt", str))
-    {
-        std::cout << str << "\n";
-    }
-
-    // write to text file
-    std::cout << "Text File Writing:\n";
-    nu::WriteTextFile("test.txt", " Hello, World!", true);
-    if (nu::ReadTextFile("test.txt", str))
-    {
-        std::cout << str << "\n";
-    }
-    */
 
     // INITIALIZATION
     nu::SetWorkingDirectory("Assets");
 
     nu::Engine::Get().Initialize();
+
+    SpaceGame game;
+    game.Initialize();
+
+    // Create font system
+    nu::Font* font = new nu::Font();
+    font->Load("Fonts/Jersey10Charted-Regular.ttf", 64);
+
+    // Render the font
+    nu::Text* text = new nu::Text(font);
+    text->Create(nu::Engine::Get().GetRenderer(), "Hello World", nu::Color{1.0f, 1.0f, 1.0f});
 
     // create audio system
     FMOD::System* audio;
@@ -93,7 +42,7 @@ int main()
     playerDesc.name = "Player";
     playerDesc.model = Assets::playerModel;
     playerDesc.transform = nu::Transform{ nu::Vector2 { 860.0f, 512.0f }, 0.0f, 50.0f };
-    playerDesc.speed = 400.0f;
+    playerDesc.speed = 600.0f;
     playerDesc.damping = 1.5f;
 
     Player* player = new Player { playerDesc };
@@ -118,15 +67,15 @@ int main()
 
 
     FMOD::Sound* sound = nullptr;
-    audio->createSound("test.wav", FMOD_DEFAULT, 0, &sound);
+    audio->createSound("Audio/test.wav", FMOD_DEFAULT, 0, &sound);
     audio->playSound(sound, 0, false, nullptr);
 
     FMOD::Sound* sound2 = nullptr;
-    audio->createSound("bass.wav", FMOD_DEFAULT, 0, &sound2);
+    audio->createSound("Audio/bass.wav", FMOD_DEFAULT, 0, &sound2);
     sounds.push_back(sound2);
 
     FMOD::Sound* sound3 = nullptr;
-    audio->createSound("cowbell.wav", FMOD_DEFAULT, 0, &sound3);
+    audio->createSound("Audio/cowbell.wav", FMOD_DEFAULT, 0, &sound3);
     sounds.push_back(sound3);
 
 
@@ -196,9 +145,8 @@ int main()
         }
 
         // Character
-        /*player.Draw(nu::engine.GetRenderer());
-        enemy.Draw(nu::engine.GetRenderer());*/
         scene.Draw(nu::Engine::Get().GetRenderer());
+        text->Draw(nu::Engine::Get().GetRenderer(), 40.0f, 40.0f);
 
         nu::Engine::Get().GetRenderer().Present();
     }
@@ -206,6 +154,5 @@ int main()
     // SHUTDOWN
     nu::Engine::Get().Shutdown();
     
-
     return 0;
 }
