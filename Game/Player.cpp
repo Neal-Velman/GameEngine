@@ -3,6 +3,7 @@
 #include "Engine.h"
 #include "Bullet.h"
 #include "Assets.h"
+#include "SpaceGame.h"
 
 void Player::Update(float dt) {
 
@@ -33,7 +34,17 @@ void Player::Update(float dt) {
 
         Bullet* bullet = new Bullet{ desc };
         m_scene->AddActor(bullet);
+        
+
     }
+
+    nu::Particle particle;
+    particle.position = m_transform.position;
+    particle.color = { 1.0f, 1.0f, 1.0f };
+    particle.lifespan = nu::RandomFloat(0.5f, 1.5f);
+    particle.velocity = { nu::RandomFloat(-200.0f, 200.0f), nu::RandomFloat(-200.0f, 200.0f) };
+
+    nu::Engine::Get().GetPS().AddParticle(particle);
 
     Actor::Update(dt);
 }
@@ -41,5 +52,6 @@ void Player::Update(float dt) {
 void Player::OnCollision(Actor* other) {
     if (other->GetName() == "Enemy") {
         SetDestroyed();
+        ((SpaceGame*)m_scene->GetGame())->OnPlayerDead();
     }
 }

@@ -13,6 +13,8 @@
 #include "Scene.h"
 #include "File.h"
 #include "Game.h"
+#include "ParticleSystem.h"
+#include "Audio.h"
 
 #include <iostream>
 #include <vector>
@@ -31,6 +33,8 @@ namespace nu {
 		Input& GetInput() { return m_input; }
 		Renderer& GetRenderer() { return m_renderer; }
 		Time& GetTime() { return m_time; }
+		ParticleSystem& GetPS() { return m_particleSystem; }
+		//Audio& GetAudio() { return m_audio; }
 
 		//Engine
 
@@ -41,6 +45,8 @@ namespace nu {
 		Input m_input;
 		Renderer m_renderer;
 		Time m_time;
+		ParticleSystem m_particleSystem;
+		//Audio m_audio;
 
 	};
 }

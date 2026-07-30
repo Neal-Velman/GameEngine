@@ -11,11 +11,18 @@ namespace nu {
 	public:
 		void AddActor(Actor* actor);
 
+
+		void RemoveAllActors();
+
 		void Update(float dt);
 		void Draw(const class Renderer& renderer);
 
 		template<typename T = Actor>
 		T* GetActorByName(const std::string& name);
+
+		void SetGame(class Game* game) { m_game = game; }
+
+		class Game* GetGame() { return m_game; }
 
 	private:
 		void UpdateCollisions();
@@ -23,7 +30,7 @@ namespace nu {
 	private:
 		std::vector<Actor*> m_actors;
 		std::vector<Actor*> m_pendingActors;
-
+		class Game* m_game { nullptr };
 	};
 
 	template<typename T>

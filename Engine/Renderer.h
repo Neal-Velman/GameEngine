@@ -22,7 +22,7 @@ namespace nu {
 		void DrawModel(const class Model& model, const struct Transform& transform) const;
 
 		int GetWidth() const { return m_width; }
-		int GetHeigt() const { return m_height; }
+		int GetHeight() const { return m_height; }
 
 		friend class Text;
 
