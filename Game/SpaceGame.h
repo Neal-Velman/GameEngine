@@ -50,4 +50,6 @@ private:
 
 	nu::Text* m_scoreText { nullptr };
 	nu::Text* m_livesText { nullptr };
+
+	//nu::Audio* m_shootSound { nullptr; }
 };

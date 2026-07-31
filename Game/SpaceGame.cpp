@@ -8,19 +8,24 @@ bool SpaceGame::Initialize() {
     Game::Initialize();
     m_gameState = GameState::TITLE;
     m_scene = new nu::Scene();
+    m_spawnTime = 2.5f;
+    nu::Engine::Get().GetAudio().AddSound("Fire", "Audio/snd_fire.wav");
+    //nu::Engine::Get().GetAudio().AddSound("Explosion", "Audio/snd_explosion_small.wav");
+    //m_audio = new nu::Audio();
     m_scene->SetGame(this);
 
     m_titleFont = new nu::Font();
-    m_titleFont->Load("Fonts/Jersey10Charted-Regular.ttf", 64);
+    m_titleFont->Load("Fonts/BitcountGridDouble-Black.ttf", 64);
 
     m_titleText = new nu::Text(m_titleFont);
     m_titleText->Create(nu::Engine::Get().GetRenderer(), "Hello World", nu::Color{ 1.0f, 1.0f, 1.0f });
 
     m_gameFont = new nu::Font();
-    m_gameFont->Load("Fonts/Jersey10Charted-Regular.ttf", 32);
+    m_gameFont->Load("Fonts/BitcountGridDouble-Black.ttf", 32);
 
     m_scoreText = new nu::Text(m_gameFont);
     m_livesText = new nu::Text(m_gameFont);
+    
 
     return true;
 }
@@ -49,10 +54,11 @@ void SpaceGame::Update(float dt) {
     case GameState::GAME:
         m_spawnTimer -= dt;
         if (m_spawnTimer <= 0.0f) {
-            m_spawnTimer = nu::RandomFloat(3.0f, 5.0f);
+            m_spawnTimer = m_spawnTime;
             SpawnEnemy();
+            // increase difficulty
             m_spawnCount++;
-            if (m_spawnCount > 5) {
+            if (m_spawnCount > 5 && m_spawnTime >= 1.0f) {
                 m_spawnCount = 0;
                 m_spawnTime -= 0.5f;
             }
@@ -74,7 +80,7 @@ void SpaceGame::Update(float dt) {
 void SpaceGame::Draw(nu::Renderer& renderer) {
     switch (m_gameState) {
     case GameState::TITLE:
-        m_titleText->Create(nu::Engine::Get().GetRenderer(), "Hello World", nu::Color{ 1.0f, 1.0f, 1.0f });
+        m_titleText->Create(nu::Engine::Get().GetRenderer(), "Totally Realistic Space Combat", nu::Color{ 1.0f, 1.0f, 1.0f });
         m_titleText->Draw(renderer, 400, 400);
         break;
     case GameState::START_GAME:
@@ -123,13 +129,31 @@ void SpaceGame::SpawnPlayer() {
 }
 
 void SpaceGame::SpawnEnemy() {
+    int enemyIndex = nu::RandomInt(2);
+    if (enemyIndex == 0) {
         EnemyDesc enemyDesc;
         enemyDesc.name = "Enemy";
-        enemyDesc.model = Assets::playerModel;
+        enemyDesc.model = Assets::enemyModel;
         enemyDesc.transform = nu::Transform{ nu::Vector2 { nu::RandomFloat((float)nu::Engine::Get().GetRenderer().GetWidth()), nu::RandomFloat((float)nu::Engine::Get().GetRenderer().GetHeight())}, 180.0f, 25.0f };
-        enemyDesc.speed = nu::RandomFloat(200.0f, 400.0f);
+        enemyDesc.speed = nu::RandomFloat(100.0f, 300.0f);
         enemyDesc.damping = 1.5f;
+        enemyDesc.health = 1.0f;
+        enemyDesc.points = 100;
 
         Enemy* enemy = new Enemy{ enemyDesc };
         m_scene->AddActor(enemy);
+    }
+    else if (enemyIndex == 1) {
+        EnemyDesc enemyDesc;
+        enemyDesc.name = "Enemy";
+        enemyDesc.model = Assets::enemy2Model;
+        enemyDesc.transform = nu::Transform{ nu::Vector2 { nu::RandomFloat((float)nu::Engine::Get().GetRenderer().GetWidth()), nu::RandomFloat((float)nu::Engine::Get().GetRenderer().GetHeight())}, 180.0f, 25.0f };
+        enemyDesc.speed = nu::RandomFloat(300.0f, 600.0f);
+        enemyDesc.damping = 1.5f;
+        enemyDesc.health = 3.0f;
+        enemyDesc.points = 500;
+    }
+        
 }
+
+//(nu::RandomInt(2)) ? Assets::enemyModel : Assets::enemyModel2;

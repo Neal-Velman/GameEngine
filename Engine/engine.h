@@ -34,7 +34,7 @@ namespace nu {
 		Renderer& GetRenderer() { return m_renderer; }
 		Time& GetTime() { return m_time; }
 		ParticleSystem& GetPS() { return m_particleSystem; }
-		//Audio& GetAudio() { return m_audio; }
+		Audio& GetAudio() { return m_audio; }
 
 		//Engine
 
@@ -46,7 +46,7 @@ namespace nu {
 		Renderer m_renderer;
 		Time m_time;
 		ParticleSystem m_particleSystem;
-		//Audio m_audio;
+		Audio m_audio;
 
 	};
 }

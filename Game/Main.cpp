@@ -33,7 +33,7 @@ int main()
 
     FMOD::Sound* sound = nullptr;
     audio->createSound("Audio/test.wav", FMOD_DEFAULT, 0, &sound);
-    audio->playSound(sound, 0, false, nullptr);
+    //audio->playSound(sound, 0, false, nullptr);
 
     FMOD::Sound* sound2 = nullptr;
     audio->createSound("Audio/bass.wav", FMOD_DEFAULT, 0, &sound2);
@@ -98,7 +98,6 @@ int main()
         nu::Engine::Get().GetRenderer().SetColor(0.0f, 0.0f, 0.0f);
         nu::Engine::Get().GetRenderer().Clear();
 
-        game.Draw(nu::Engine::Get().GetRenderer());
 
         for (int i = 0; i < (int)points.size() - 1; i++) {
             nu::Engine::Get().GetRenderer().SetColor(nu::RandomFloat(), nu::RandomFloat(), nu::RandomFloat());
@@ -107,8 +106,8 @@ int main()
         }
 
         // Character
-        //nu::Engine::Get().GetPS();
-        nu:: Engine::Get().GetPS().Draw(nu::Engine::Get().GetRenderer());
+        game.Draw(nu::Engine::Get().GetRenderer());
+        nu::Engine::Get().GetPS().Draw(nu::Engine::Get().GetRenderer());
         nu::Engine::Get().GetRenderer().Present();
     }
 

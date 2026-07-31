@@ -19,4 +19,5 @@ public:
 private:
 	int m_ammo = 0;
 	float m_speed = 400.0f;
+	float m_fireTimer = 0.0f;
 };
