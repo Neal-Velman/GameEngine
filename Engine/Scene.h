@@ -3,13 +3,14 @@
 
 #include <vector>
 #include <string>
+#include <memory>
 
 namespace nu {
 
 	class Scene {
 
 	public:
-		void AddActor(Actor* actor);
+		void AddActor(std::unique_ptr<Actor> actor);
 
 
 		void RemoveAllActors();
@@ -28,20 +29,18 @@ namespace nu {
 		void UpdateCollisions();
 
 	private:
-		std::vector<Actor*> m_actors;
-		std::vector<Actor*> m_pendingActors;
+		std::vector<std::unique_ptr<Actor>> m_actors;
+		std::vector<std::unique_ptr<Actor>> m_pendingActors;
 		class Game* m_game { nullptr };
 	};
 
 	template<typename T>
 	inline T* Scene::GetActorByName(const std::string& name) {
-		for (auto actor : m_actors) {
-			T* actorT = dynamic_cast<T*>(actor);
-			if (actorT && actorT->m_name == name) {
-				return actorT;
+		for (auto& actor : m_actors) {
+			if (actor->GetName() == name) {
+				return dynamic_cast<T*>(actor.get());
 			}
 		}
 		return nullptr;
 	}
-
 }

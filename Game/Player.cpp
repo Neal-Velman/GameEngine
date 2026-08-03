@@ -35,16 +35,15 @@ void Player::Update(float dt) {
         desc.speed = 400.0f;
         desc.lifespan = 3.0f;
 
-        Bullet* bullet = new Bullet{ desc };
-        m_scene->AddActor(bullet);
+        // create bullets
+
+        m_scene->AddActor(std::move(std::make_unique<Bullet>(desc)));
 
         desc.transform.rotation += 20.0f;
-        bullet = new Bullet{ desc };
-        m_scene->AddActor(bullet);
+        m_scene->AddActor(std::move(std::make_unique<Bullet>(desc)));
 
         desc.transform.rotation -= 40.0f;
-        bullet = new Bullet{ desc };
-        m_scene->AddActor(bullet);
+        m_scene->AddActor(std::move(std::make_unique<Bullet>(desc)));
 
         nu::Engine::Get().GetAudio().PlaySound("Fire");
         

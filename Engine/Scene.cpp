@@ -4,36 +4,37 @@
 
 namespace nu {
 
-	void Scene::AddActor(Actor* actor) {
+	void Scene::AddActor(std::unique_ptr<Actor> actor) {
 		actor->m_scene = this;
-		m_pendingActors.push_back(actor); 
+		m_pendingActors.push_back(std::move(actor)); 
 	}
 
 	void Scene::RemoveAllActors() {
-		for (auto actor : m_actors) {
-			delete actor;
-		}
+		// delete actors
 		m_actors.clear();
 	}
 
 	void Scene::Update(float dt) {
 		// uodate actors
-		for (auto actor : m_actors) {
+		for (auto& actor : m_actors) {
 			actor->Update(dt);
 		}
 		// update collisions
 		UpdateCollisions();
 
 		//remove destroyed actors
-		std::erase_if(m_actors, [](auto actor) { return actor->m_destroyed; });
+		std::erase_if(m_actors, [](auto& actor) { return actor->m_destroyed; });
 
 		// add pending actors
-		m_actors.insert(m_actors.end(), m_pendingActors.begin(), m_pendingActors.end());
+		for (auto& actor : m_pendingActors) {
+			m_actors.push_back(std::move(actor));
+		}
 		m_pendingActors.clear();
 	}
 
 	void Scene::Draw(const class Renderer& renderer) {
-		for (auto actor : m_actors) {
+		for (const auto& actor : m_actors) {
+			if (actor)
 			actor->Draw(renderer);
 		}
 	}
@@ -48,8 +49,8 @@ namespace nu {
 
 				float distance = (actorA->m_transform.position - actorB->m_transform.position).Length();
 				if (distance <= actorA->GetRadius() + actorB->GetRadius()) {
-					actorA->OnCollision(actorB);
-					actorB->OnCollision(actorA);
+					actorA->OnCollision(actorB.get());
+					actorB->OnCollision(actorA.get());
 				}
 			}
 		}

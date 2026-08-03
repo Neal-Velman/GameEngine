@@ -124,8 +124,8 @@ void SpaceGame::SpawnPlayer() {
     playerDesc.speed = 600.0f;
     playerDesc.damping = 1.5f;
 
-    Player* player = new Player{ playerDesc };
-    m_scene->AddActor(player);
+    std::unique_ptr<Player> player = std::make_unique<Player>(playerDesc);
+    m_scene->AddActor(std::move(player));
 }
 
 void SpaceGame::SpawnEnemy() {
@@ -140,8 +140,7 @@ void SpaceGame::SpawnEnemy() {
         enemyDesc.health = 1.0f;
         enemyDesc.points = 100;
 
-        Enemy* enemy = new Enemy{ enemyDesc };
-        m_scene->AddActor(enemy);
+        m_scene->AddActor(std::move(std::make_unique<Enemy>(enemyDesc)));
     }
     else if (enemyIndex == 1) {
         EnemyDesc enemyDesc;
@@ -152,6 +151,8 @@ void SpaceGame::SpawnEnemy() {
         enemyDesc.damping = 1.5f;
         enemyDesc.health = 3.0f;
         enemyDesc.points = 500;
+
+        m_scene->AddActor(std::move(std::make_unique<Enemy>(enemyDesc)));
     }
         
 }

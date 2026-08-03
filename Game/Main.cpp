@@ -8,10 +8,59 @@
 #include <iostream>
 #include <vector>
 #include <map>
+#include <memory>
+
+class Object {
+
+public:
+    Object() { std::cout << "Constructor" << std::endl; }
+    ~Object() { std::cout << "Destructor" << std::endl; }
+
+    Object(const Object& object) { std::cout << "Copy" << std::endl; }
+    Object& operator = (const Object& object) { std::cout << "Assignment" << std::endl; return *this; }
+
+};
 
 
-int main()
-{
+int main() {
+
+    std::cout << "---------- Object ----------" << std::endl;
+    {
+        Object objectA;
+        Object objectB(objectA);
+        Object objectC;
+        objectC = objectA;
+    }
+
+    std::cout << "---------- Raw Pointers ----------" << std::endl;
+    {
+        Object* objectA = new Object();
+        std::cout << objectA << std::endl;
+        Object* objectB = new Object(*objectA);
+        std::cout << objectB << std::endl;
+        Object* objectC = nullptr;
+        objectC = objectA;
+        std::cout << objectC << std::endl;
+
+
+		delete objectA;
+		delete objectB;
+		//delete objectC;
+    }
+
+    std::cout << "---------- Smart Pointers ----------" << std::endl;
+    {
+        std::unique_ptr<Object> objectA = std::make_unique<Object>();
+        std::cout << objectA.get() << std::endl;
+        std::unique_ptr<Object> objectB;
+        objectB = std::move(objectA);
+        std::cout << objectB.get() << std::endl;
+
+        objectB.reset();
+
+    }
+
+    //return 0;
 
     // INITIALIZATION
     nu::SetWorkingDirectory("Assets");
@@ -29,19 +78,19 @@ int main()
     audio->init(32, FMOD_INIT_NORMAL, extradriverdata);
 
     std::vector<nu::Vector2> points;
-    std::vector<FMOD::Sound*> sounds;
+    /*std::vector<FMOD::Sound*> sounds;*/
 
-    FMOD::Sound* sound = nullptr;
-    audio->createSound("Audio/test.wav", FMOD_DEFAULT, 0, &sound);
-    //audio->playSound(sound, 0, false, nullptr);
+    //FMOD::Sound* sound = nullptr;
+    //audio->createSound("Audio/test.wav", FMOD_DEFAULT, 0, &sound);
+    ////audio->playSound(sound, 0, false, nullptr);
 
-    FMOD::Sound* sound2 = nullptr;
-    audio->createSound("Audio/bass.wav", FMOD_DEFAULT, 0, &sound2);
-    sounds.push_back(sound2);
+    //FMOD::Sound* sound2 = nullptr;
+    //audio->createSound("Audio/bass.wav", FMOD_DEFAULT, 0, &sound2);
+    //sounds.push_back(sound2);
 
-    FMOD::Sound* sound3 = nullptr;
-    audio->createSound("Audio/cowbell.wav", FMOD_DEFAULT, 0, &sound3);
-    sounds.push_back(sound3);
+    //FMOD::Sound* sound3 = nullptr;
+    //audio->createSound("Audio/cowbell.wav", FMOD_DEFAULT, 0, &sound3);
+    //sounds.push_back(sound3);
 
     bool quit = false;
     // MAIN LOOP
@@ -66,13 +115,13 @@ int main()
 
 
 
-        if (nu::Engine::Get().GetInput().GetKeyPressed(SDL_SCANCODE_1)) {
+        /*if (nu::Engine::Get().GetInput().GetKeyPressed(SDL_SCANCODE_1)) {
             audio->playSound(sounds[0], nullptr, false, nullptr);
-        }
+        }*/
 
-        if (nu::Engine::Get().GetInput().GetKeyPressed(SDL_SCANCODE_2)) {
+        /*if (nu::Engine::Get().GetInput().GetKeyPressed(SDL_SCANCODE_2)) {
             audio->playSound(sounds[1], nullptr, false, nullptr);
-        }
+        }*/
 
         if (nu::Engine::Get().GetInput().GetMouseDown(nu::Input::MouseButton::LEFT)) {
             if (points.empty()) {
